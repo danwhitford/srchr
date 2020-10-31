@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import ed from 'js-levenshtein';
 
-function Srchr({ searchItems }) {
+function Srchr({ searchItems, caseSensitive = true }) {
     const [searchText, setSearchText] = useState(null)
     const [matchedItems, setMatchedItems] = useState([])
 
@@ -10,7 +10,11 @@ function Srchr({ searchItems }) {
             setMatchedItems([])
         } else {
             const matches = searchItems.filter(item => {
-                return item.includes(searchText)
+                if (caseSensitive) {
+                    return item.includes(searchText)
+                } else {
+                    return item.toLocaleLowerCase().includes(searchText.toLocaleLowerCase())
+                }
             }).map(match => {
                 const dist = ed(match, searchText)
                 return [match, dist]
@@ -18,7 +22,7 @@ function Srchr({ searchItems }) {
                 return m1[1] - m2[1]
             }).map(match => {
                 return match[0]
-            })            
+            })
             setMatchedItems(matches)
         }
     }, [searchText, searchItems])

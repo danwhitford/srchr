@@ -7,7 +7,7 @@ function App() {
     <div className="App">
       <h1>Dan's amazing search bar</h1>
       <Srchr
-        searchItems={['foo', 'bar', 'baz', 'football']}
+        searchItems={['foo', 'bar', 'baz', 'Football']}
       />
     </div>
   );
